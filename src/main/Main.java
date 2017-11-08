@@ -2,9 +2,9 @@ package main;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.LinkedList;
 
 import weka.classifiers.Classifier;
-import weka.classifiers.Evaluation;
 import weka.classifiers.rules.JRip;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -16,6 +16,10 @@ public class Main {
         Instances ins_train = null;
         Instances ins_test = null;
         Classifier cfs = null;
+        
+        DecimalFormat df1 = new DecimalFormat("#0.000000");
+        DecimalFormat df2 = new DecimalFormat("#0.000");
+        
         try {
             File file_train = new File("rule_1_1.arff");
             ArffLoader loader_train = new ArffLoader();
@@ -24,9 +28,8 @@ public class Main {
             File file_test = new File("rule_1_test.arff");
             ArffLoader loader_test = new ArffLoader();
             loader_test.setFile(file_test);
-            // 70
+            
             ins_train = loader_train.getDataSet();
-            // 
             ins_test = loader_test.getDataSet();
             
             ins_train.setClassIndex(ins_train.numAttributes() - 1);
@@ -34,59 +37,84 @@ public class Main {
             
             cfs = new JRip();
             
-            int numOftest = 4500;
-            final int t = 30;
+            int numOftest = 300;
+            final int init = 30;
             
-            int loops = 100;
-            int interval = t;
-            int times = t;
-            double f = 1.0;
+            //parameter
+            int interval = init;
+            int times = init;
+            
+            //target
+            double freq = 1.0;
             double accuracy = 0.0;
             double threshold = 0.95;
+            
             int same = 0;
             int index = 0;
+            
             Instance testInst;
             
-            DecimalFormat df1 = new DecimalFormat("#0.000000");
-            DecimalFormat df2 = new DecimalFormat("#0.000");
+            LinkedList<String> window = new LinkedList<String>();
             
-            while(loops>0 && index<numOftest){
-                for (int i = 0; i < interval; i++) {
-                    if(times>0){
-                        cfs.buildClassifier(ins_train);
-                        
-                        testInst = ins_test.instance(index);
-                        double predictValue = cfs.classifyInstance(testInst);
-                        
-                        if(testInst.classValue() == predictValue){
-                            same++;
-                        }
-                        ins_train.add(ins_test.instance(index));
-                        
-                        index++;
-                        times--;
+            int step = 1;
+            
+            while(numOftest>0 && index<4500) {
+                
+                //build classifier
+                cfs.buildClassifier(ins_train); 
+                //get one test instance
+                testInst = ins_test.instance(index);
+                //get predict value
+                double predictValue = cfs.classifyInstance(testInst);
+                
+                ins_train.add(ins_test.instance(index));
+                
+                if(times>0) {
+                    //no accuracy 
+                    if(testInst.classValue() == predictValue){
+                        window.addLast("T");
+                        same++;
                     }else{
-                        break;
+                        window.addLast("F");
                     }
+                    
+                    times--;
+                    System.out.println(1.000000 +" "+ 0.000 +" "+ init);
+                }else {
+                    if(testInst.classValue() == predictValue){
+                        window.addLast("T");
+                        same++;
+                    }else{
+                        window.addLast("F");
+                    }
+                    
+                    if("T".equals(window.pollFirst())){
+                        same--;
+                    }
+                    
+                    //compute accuracy
+                    System.out.println("same = "+same);
+                    accuracy = same/(init*1.0);
+                    
+                    if(accuracy >= threshold){
+                        interval += 10;
+                    }else{
+                        interval = init;
+                    }
+                    
+                    freq = init/(interval*1.0);
+                    
+                    step = (int) Math.floor( interval/(init*1.0) );
+                    
+                    String tmp_freq = df1.format(freq);
+                    String tmp_acc = df2.format(accuracy);
+                  
+                    System.out.println(tmp_freq +" "+ tmp_acc +" "+ interval);
                 }
                 
-                times = t;
-                accuracy = same/(times*1.0);
+                index = index + step;
                 
-                if(accuracy >= threshold){
-                    interval += 10;
-                }else{
-                    interval = t + loops;
-                }
-                
-                f = t/(interval*1.0);
-                
-                String tmp_freq = df1.format(f);
-                String tmp_acc = df2.format(accuracy);
-                System.out.println(tmp_freq +" "+ tmp_acc +" "+ interval);
-                
-                same = 0;
-                loops--;
+                numOftest--;
             }
             
         } catch (Exception e) {
@@ -95,3 +123,13 @@ public class Main {
     }
 
 }
+
+
+
+
+
+//
+//String tmp_freq = df1.format(freq);
+//String tmp_acc = df2.format(accuracy);
+//
+//System.out.println(tmp_freq +" "+ tmp_acc +" "+ interval);
