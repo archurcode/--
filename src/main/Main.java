@@ -51,14 +51,13 @@ public class Main {
             DecimalFormat df2 = new DecimalFormat("#0.000");
             
             while(loops>0 && index<numOftest){
-                
                 for (int i = 0; i < interval; i++) {
                     if(times>0){
                         cfs.buildClassifier(ins_train);
                         
                         testInst = ins_test.instance(index);
                         double predictValue = cfs.classifyInstance(testInst);
-//                        System.out.println(i+" "+testInst.classValue()+"--"+predictValue);
+                        
                         if(testInst.classValue() == predictValue){
                             same++;
                         }
@@ -73,19 +72,10 @@ public class Main {
                 
                 times = t;
                 accuracy = same/(times*1.0);
-//                
-//                if(accuracy >= threshold){
-//                    f = f/2;
-//                    interval = (int)Math.ceil(times/f); //向上取整
-//                }else{
-//                    f = Math.min((f+1)/10.0, 1.0);
-//                    interval = (int)Math.floor(times/f); //向下取整
-//                }
                 
                 if(accuracy >= threshold){
                     interval += 10;
                 }else{
-//                    interval = Math.max(interval/2, t); 
                     interval = t + loops;
                 }
                 
@@ -94,9 +84,6 @@ public class Main {
                 String tmp_freq = df1.format(f);
                 String tmp_acc = df2.format(accuracy);
                 System.out.println(tmp_freq +" "+ tmp_acc +" "+ interval);
-//                System.out.println(loops +": "+ tmp_freq +" "+ tmp_acc +" "+ interval);
-//                System.out.println("f = " + tmp + " acc = " + accuracy);
-                
                 
                 same = 0;
                 loops--;
@@ -105,44 +92,6 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//cfs.buildClassifier(ins_train);
-//
-//Instance testInst;
-//Evaluation testingEvaluation = new Evaluation(ins_train);
-//int length = ins_train.numInstances();
-//
-//for (int i = 0; i < length; i++) {
-//  testInst = ins_train.instance(i);
-//  double predictValue = testingEvaluation.evaluateModelOnceAndRecordPrediction(cfs,
-//          testInst);
-//  System.out.println(i+" "+testInst.classValue()+"--"+predictValue);
-//}
