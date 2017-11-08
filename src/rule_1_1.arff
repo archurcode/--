@@ -1,0 +1,13 @@
+@RELATION 1 
+  
+@ATTRIBUTE appCatergry  {social_contact,navigation,message,game}  
+@ATTRIBUTE time   numeric  
+@ATTRIBUTE latitude  numeric  
+@ATTRIBUTE longitude   numeric 
+@ATTRIBUTE permission   {location,contact,phone,microphone} 
+@ATTRIBUTE class {true,false}  
+
+@DATA
+navigation,19,39.25,105.34,location,false
+social_contact,19,37.77,105.0,location,false
+navigation,15,37.13,108.05,contact,true

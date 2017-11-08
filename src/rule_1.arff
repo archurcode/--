@@ -1,0 +1,80 @@
+@RELATION 70  
+  
+@ATTRIBUTE appCatergry  {social_contact,navigation,message,game}  
+@ATTRIBUTE time   numeric  
+@ATTRIBUTE latitude  numeric  
+@ATTRIBUTE longitude   numeric 
+@ATTRIBUTE permission   {location,contact,phone,microphone} 
+@ATTRIBUTE class {true,false}  
+
+@DATA
+navigation,19,39.25,105.34,location,true
+social_contact,19,37.77,105.0,location,true
+navigation,15,37.13,108.05,contact,true
+game,16,39.18,106.43,phone,true
+social_contact,23,39.68,107.95,contact,true
+social_contact,21,37.59,108.93,location,true
+social_contact,18,39.67,109.06,microphone,true
+game,21,38.82,107.15,location,true
+game,14,39.76,105.93,contact,true
+social_contact,17,36.52,109.31,location,true
+game,16,36.77,106.67,phone,true
+game,15,36.38,106.22,phone,true
+game,20,39.36,108.37,microphone,true
+message,20,38.44,107.77,location,true
+navigation,20,36.61,109.49,contact,true
+navigation,15,38.95,105.14,phone,true
+social_contact,15,38.87,108.11,contact,true
+game,18,39.37,105.85,location,true
+social_contact,17,36.54,105.61,location,true
+message,22,37.4,109.35,contact,true
+message,17,38.86,105.35,phone,true
+navigation,12,38.58,109.21,contact,true
+game,19,36.48,109.35,microphone,true
+game,20,39.44,109.61,phone,true
+social_contact,16,36.51,105.8,location,true
+message,19,38.75,106.86,contact,true
+game,23,39.84,109.73,location,true
+social_contact,16,39.12,105.2,microphone,true
+message,16,38.39,109.83,contact,true
+navigation,14,36.0,105.22,microphone,true
+game,13,36.91,107.97,phone,true
+navigation,13,38.4,109.92,phone,true
+social_contact,19,39.27,107.22,microphone,true
+game,15,36.5,109.67,contact,true
+social_contact,12,38.69,107.46,phone,true
+navigation,18,38.87,108.49,phone,true
+navigation,18,39.43,105.62,microphone,true
+navigation,24,36.68,107.16,phone,true
+navigation,20,39.09,106.06,microphone,true
+message,17,38.93,108.75,contact,true
+game,19,38.81,109.86,contact,true
+message,16,37.11,109.97,microphone,true
+message,12,37.53,108.37,contact,true
+message,14,37.52,109.28,location,true
+message,16,36.8,108.71,microphone,true
+social_contact,21,37.89,109.67,location,true
+social_contact,21,36.87,106.37,location,true
+navigation,19,39.44,107.62,microphone,true
+message,17,36.81,107.75,microphone,true
+game,15,36.29,107.85,contact,true
+navigation,19,38.82,107.46,location,true
+message,24,37.16,108.74,location,true
+message,18,39.17,109.14,location,true
+message,17,36.06,105.38,contact,true
+game,13,38.64,106.92,phone,true
+message,21,37.15,107.06,phone,true
+navigation,21,38.33,105.17,location,true
+navigation,13,38.33,105.08,contact,true
+social_contact,16,39.26,108.49,phone,true
+navigation,23,38.44,107.35,microphone,true
+message,21,36.26,105.48,microphone,true
+navigation,15,38.62,107.99,microphone,true
+social_contact,14,37.01,109.53,location,true
+message,14,39.34,109.42,location,true
+social_contact,18,36.23,105.91,phone,true
+message,16,37.93,109.77,contact,true
+game,13,38.62,106.14,microphone,true
+message,22,39.9,109.6,location,true
+game,24,36.94,107.98,contact,true
+game,22,39.17,107.66,microphone,true
