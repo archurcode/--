@@ -25,7 +25,7 @@ public class Main {
             ArffLoader loader_train = new ArffLoader();
             loader_train.setFile(file_train);
             
-            File file_test = new File("rule_1_test.arff");
+            File file_test = new File("1-4_rule_data.arff");
             ArffLoader loader_test = new ArffLoader();
             loader_test.setFile(file_test);
             
@@ -37,8 +37,8 @@ public class Main {
             
             cfs = new JRip();
             
-            int numOftest = 300;
-            final int init = 30;
+            int numOftest = 1000;
+            final int init = 25;
             
             //parameter
             int interval = init;
@@ -47,7 +47,7 @@ public class Main {
             //target
             double freq = 1.0;
             double accuracy = 0.0;
-            double threshold = 0.95;
+            double threshold = 0.70;
             
             int same = 0;
             int index = 0;
@@ -58,7 +58,7 @@ public class Main {
             
             int step = 1;
             
-            while(numOftest>0 && index<4500) {
+            while(numOftest>0 && index<=6000) {
                 
                 //build classifier
                 cfs.buildClassifier(ins_train); 
@@ -67,7 +67,7 @@ public class Main {
                 //get predict value
                 double predictValue = cfs.classifyInstance(testInst);
                 
-                ins_train.add(ins_test.instance(index));
+                ins_train.add(testInst);
                 
                 if(times>0) {
                     //no accuracy 
@@ -79,7 +79,8 @@ public class Main {
                     }
                     
                     times--;
-                    System.out.println(1.000000 +" "+ 0.000 +" "+ init);
+//                    System.out.println("same "+same);
+                    accuracy = same/((init-times)*1.0);
                 }else {
                     if(testInst.classValue() == predictValue){
                         window.addLast("T");
@@ -93,26 +94,29 @@ public class Main {
                     }
                     
                     //compute accuracy
-                    System.out.println("same = "+same);
+//                    System.out.println("same = "+same);
                     accuracy = same/(init*1.0);
                     
-                    if(accuracy >= threshold){
-                        interval += 10;
-                    }else{
-                        interval = init;
-                    }
                     
-                    freq = init/(interval*1.0);
-                    
-                    step = (int) Math.floor( interval/(init*1.0) );
-                    
-                    String tmp_freq = df1.format(freq);
-                    String tmp_acc = df2.format(accuracy);
-                  
-                    System.out.println(tmp_freq +" "+ tmp_acc +" "+ interval);
                 }
                 
+                if(accuracy >= threshold){
+                    interval += 5;
+                }else{
+                    interval = init;
+                }
+                
+                freq = init/(interval*1.0);
+                
+                step = (int) Math.ceil( interval/(init*1.0) );
+                
+                String tmp_freq = df1.format(freq);
+                String tmp_acc = df2.format(accuracy);
+              
+                System.out.println(tmp_freq +" "+ tmp_acc +" "+ interval);
+                
                 index = index + step;
+//                System.out.println("index = "+index);
                 
                 numOftest--;
             }

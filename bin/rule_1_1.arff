@@ -1,4 +1,4 @@
-@RELATION 1 
+@RELATION 3 
   
 @ATTRIBUTE appCatergry  {social_contact,navigation,message,game}  
 @ATTRIBUTE time   numeric  
@@ -8,6 +8,6 @@
 @ATTRIBUTE class {true,false}  
 
 @DATA
-navigation,19,39.25,105.34,location,false
-social_contact,19,37.77,105.0,location,false
-navigation,15,37.13,108.05,contact,true
+navigation,12,37.43,108.88,contact,true
+social_contact,23,39.2,109.74,location,false
+navigation,15,39.08,106.24,microphone,true
